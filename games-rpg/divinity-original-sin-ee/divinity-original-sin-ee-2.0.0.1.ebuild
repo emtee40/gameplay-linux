@@ -16,6 +16,11 @@ RESTRICT="fetch"
 SRC_URI="divinity_original_sin_enhanced_edition_${PV}_gog.sh"
 
 RDEPEND="
+	media-libs/libpng:0/16
+	media-libs/libsdl2
+	media-libs/mesa
+	media-libs/openal
+	sys-libs/zlib
 "
 DEPEND="${RDEPEND}"
 
