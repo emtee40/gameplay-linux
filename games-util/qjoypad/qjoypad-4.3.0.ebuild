@@ -15,7 +15,7 @@ IUSE=""
 
 RDEPEND="
 	x11-libs/libXtst
-	dev-qt/qtgui:4"
+	dev-qt/qtgui:5"
 DEPEND="${RDEPEND}
 	x11-proto/inputproto
 	x11-proto/xextproto
