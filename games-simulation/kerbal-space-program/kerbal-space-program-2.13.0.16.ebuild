@@ -18,6 +18,14 @@ IUSE=""
 
 DEPEND="app-arch/unzip"
 RDEPEND="
+	dev-libs/glib:2
+	media-libs/mesa
+	sys-libs/glibc:2.2
+	x11-libs/gdk-pixbuf:2
+	x11-libs/gtk+:2
+	x11-libs/libX11
+	x11-libs/libXcursor
+	x11-libs/libXrandr
 "
 QA_DIR="usr/share/${PF}"
 QA_PREBUILT="${QA_DIR}/Launcher.x86 ${QA_DIR}/KSP.x86 ${QA_DIR}/Launcher_Data/Mono/x86/libmono.so ${QA_DIR}/KSP_Data/Mono/x86/libmono.so"
