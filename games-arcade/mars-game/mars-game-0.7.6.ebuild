@@ -18,7 +18,7 @@ IUSE="debug"
 
 DEPEND="
 	dev-libs/fribidi
-	media-libs/libsfml
+	media-libs/libsfml:=
 	media-libs/taglib
 	virtual/opengl
 "
