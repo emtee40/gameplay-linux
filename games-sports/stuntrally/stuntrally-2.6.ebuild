@@ -43,6 +43,10 @@ PDEPEND="${LIVE_PDEPEND}"
 
 REQUIRED_USE="editor? ( game )"
 
+PATCHES=(
+	"${FILESDIR}/${P}_gcc6-fix.patch"
+)
+
 DOCS=(Readme.txt)
 
 src_configure() {
