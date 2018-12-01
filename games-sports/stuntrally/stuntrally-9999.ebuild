@@ -53,6 +53,7 @@ src_configure() {
 		-DBUILD_GAME=$(usex game)
 		-DBUILD_EDITOR=$(usex editor)
 		-DBUILD_SHARED_LIBS=OFF
+		-DSHARE_INSTALL="share/stuntrally"
 	)
 	cmake-utils_src_configure
 }
