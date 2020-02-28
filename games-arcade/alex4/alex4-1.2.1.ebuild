@@ -14,9 +14,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="media-libs/aldumb
+RDEPEND="|| ( media-libs/aldumb media-libs/dumb[allegro] )
 	media-libs/allegro:0"
 DEPEND="${RDEPEND}"
+
+PATCHES=( "${FILESDIR}/${P}_gcc10.patch" )
 
 src_compile() {
 	emake CC="$(tc-getCC)" CFLAGS="${CFLAGS}" PREFIX="/usr"
