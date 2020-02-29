@@ -1,10 +1,9 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI=5
+EAPI=7
 
-inherit eutils games
+inherit desktop eutils
 
 MY_PN="Osmos"
 MY_P="${MY_PN}_${PV}"
@@ -18,7 +17,6 @@ SLOT="0"
 KEYWORDS="-* ~amd64 ~x86"
 IUSE=""
 RESTRICT="fetch strip"
-PROPERTIES="interactive"
 
 RDEPEND="
 	virtual/opengl
@@ -33,14 +31,12 @@ DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_PN}"
 
-GAMES_CHECK_LICENSE="yes"
-
 pkg_nofetch() {
 	einfo "Please download ${MY_P}.tar.gz and place it into ${DISTDIR}"
 }
 
 src_install() {
-	local GAMEDIR="${GAMES_PREFIX_OPT}/${PN}"
+	local dir="/opt/${PN}"
 	local exe
 
 	if use amd64 ; then
@@ -50,17 +46,15 @@ src_install() {
 		exe="${MY_PN}.bin32"
 	fi
 
-	exeinto "${GAMEDIR}"
+	exeinto "${dir}"
 	doexe "${exe}" || die "doexe"
 
-	dohtml readme.html
-	insinto "${GAMEDIR}"
+	dodoc readme.html
+	insinto "${dir}"
 	doins -r Fonts/ Sounds/ Textures/ Osmos-* *.cfg || die "doins failed"
 
 	newicon "Icons/256x256.png" "${PN}.png"
 
-	games_make_wrapper "${PN}" "./${exe}" "${GAMEDIR}"
+	make_wrapper "${PN}" "./${exe}" "${dir}"
 	make_desktop_entry "${PN}" "Osmos"
-
-	prepgamesdirs
 }
