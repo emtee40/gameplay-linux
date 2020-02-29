@@ -1,10 +1,9 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: games-puzzle/kinetris/kinetris-1.0.0b_pre5.ebuild frostwork Exp $
 
-EAPI="5"
+EAPI=7
 
-inherit multilib games
+inherit desktop eutils
 
 DESCRIPTION="A calm and meditative game of wrapping rope around wooden sculptures."
 HOMEPAGE="http://zenbound.com/"
@@ -13,10 +12,10 @@ SRC_URI="
 	amd64? ( ${P}-amd64.tar.gz )
 "
 
-LICENSE="as-is"
+LICENSE="all-rights-reserved"
 SLOT="0"
 RESTRICT="fetch"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="-* ~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
@@ -72,7 +71,7 @@ MY_PN="ZenBound2"
 
 src_install() {
 	local lib="$(get_libdir)"
-	GAMEDIR="${GAMES_PREFIX_OPT}/${PN}"
+	local dir="/opt/${PN}"
 
 	# Unbundling
 	rm "./${lib}/libopenal.so.1"
@@ -82,15 +81,13 @@ src_install() {
 	rm "./${lib}/libogg.so.0"
 
 	newicon "${MY_PN}.png" "${PN}.png"
-	exeinto "${GAMEDIR}"
-	insinto "${GAMEDIR}"
+	exeinto "${dir}"
+	insinto "${dir}"
 	doins -r "data_common"
 	doins -r "data_desktop"
 	doexe "${MY_PN}.bin"
 
-        # install shortcuts
-        games_make_wrapper "${PN}" "./${MY_PN}.bin" "${GAMEDIR}" "${GAMEDIR}/${lib}" || die "install shortcut"
-        make_desktop_entry "${PN}" "${MY_PN}" "${PN}"
-
-        prepgamesdirs
+	# install shortcuts
+	make_wrapper "${PN}" "./${MY_PN}.bin" "${dir}" "${dir}/${lib}" || die "install shortcut"
+	make_desktop_entry "${PN}" "${MY_PN}" "${PN}"
 }
