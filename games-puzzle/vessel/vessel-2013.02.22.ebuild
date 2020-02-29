@@ -1,26 +1,21 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI="5"
+EAPI=7
 
-inherit unpacker games
+inherit desktop eutils unpacker
 
 DESCRIPTION="Platform game where you manipulate liquids."
 HOMEPAGE="http://strangeloopgames.com"
-SRC_URI="${P}-bin"
+SRC_URI="${PN}-$(ver_cut 2)$(ver_cut 3)$(ver_cut 1)-bin"
 
-LICENSE="as-is"
+LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-
-IUSE="video_cards_intel"
+IUSE=""
 RESTRICT="strip fetch"
 
 DEPEND="app-arch/unzip"
-RDEPEND="
-	video_cards_intel? ( media-libs/libtxc_dxtn )
-"
 
 S=${WORKDIR}/data
 
@@ -31,7 +26,7 @@ pkg_nofetch() {
 }
 
 src_unpack() {
-	unpack_zip "${A}"
+	unpack_zip ${A}
 }
 
 src_install() {
@@ -48,8 +43,6 @@ src_install() {
 	doins -r Data
 	doexe x86/*
 
-	games_make_wrapper "${PN}" "./x86/${PN}.x86" "${dir}" "${dir}/x86"
+	make_wrapper "${PN}" "./x86/${PN}.x86" "${dir}" "${dir}/x86"
 	make_desktop_entry "${PN}" "Vessel" "${PN}"
-
-	prepgamesdirs
 }
