@@ -1,11 +1,9 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: games-puzzle/hex-a-hop-1.1.0.ebuild,v 1.0 2010/01/20 09:41:34 by frostwork Exp $
 
-EAPI="2"
+EAPI=7
 
 MY_PN=hexahop
-inherit games
 
 DESCRIPTION="a hexagonal tile-based puzzle game"
 HOMEPAGE="http://hexahop.sourceforge.net/"
