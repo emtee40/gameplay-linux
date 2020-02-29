@@ -1,17 +1,16 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: games-puzzle/kinetris/kinetris-1.0.0b_pre5.ebuild frostwork Exp $
 
-EAPI="5"
+EAPI=7
 MY_PN="Spirits"
 
-inherit games
+inherit desktop eutils
 
 DESCRIPTION="Save the spirits of leaf litters"
 HOMEPAGE="http://www.spacesofplay.com/spirits/"
 SRC_URI="${PN}-linux-${PV}_120903-1348705231.zip"
 
-LICENSE="as-is"
+LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
@@ -26,16 +25,16 @@ S="${WORKDIR}/${MY_PN}"
 
 src_install() {
 	local libdir binary
-	GAMEDIR="${GAMES_PREFIX_OPT}/${MY_PN}"
+	local dir="/opt/${MY_PN}"
 
 	use amd64 && {
-# TODO: unbundling SDL2
+		# TODO: unbundling SDL2
 		libdir=x86_64
 		binary=Spirits-64
 	}
 
 	use x86 && {
-# TODO: unbundling SDL2
+		# TODO: unbundling SDL2
 		libdir=i686
 		binary=Spirits-32
 	}
@@ -44,18 +43,16 @@ src_install() {
 
 	rm "./${libdir}/libopenal.so.1"
 
-	exeinto "${GAMEDIR}"
-	insinto "${GAMEDIR}"
+	exeinto "${dir}"
+	insinto "${dir}"
 	doins -r data
-# TODO: unbundling SDL2
+	# TODO: unbundling SDL2
 	doins -r "${libdir}"
 	doexe "${binary}"
 
-        # install shortcuts
-        games_make_wrapper "${PN}" "./${binary}" "${GAMEDIR}" "${GAMEDIR}/${libdir}" || die "install shortcut"
-        make_desktop_entry "${PN}" "${MY_PN}" "${PN}"
-
-        prepgamesdirs
+	# install shortcuts
+	make_wrapper "${PN}" "./${binary}" "${dir}" "${dir}/${libdir}" || die "install shortcut"
+	make_desktop_entry "${PN}" "${MY_PN}" "${PN}"
 }
 
 pkg_postinstall() {
