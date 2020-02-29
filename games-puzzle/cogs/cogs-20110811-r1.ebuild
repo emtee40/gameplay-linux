@@ -1,19 +1,18 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI="5"
+EAPI=7
 
-inherit eutils games
+inherit desktop eutils
 
-DESCRIPTION="Immersed in a steampunk world with stunning visual design. Build an incredible variety of machines from sliding tiles."
+DESCRIPTION="Immersed in a steampunk world with stunning visual design."
 HOMEPAGE="http://www.cogsgame.com/"
 
 SRC_URI="${P/-/_}_all.tar.gz"
 
-LICENSE="as-is"
+LICENSE="all-rights-reserved"
 SLOT="0"
-KEYWORDS="-* amd64 ~x86"
+KEYWORDS="-* ~amd64 ~x86"
 IUSE=""
 RESTRICT="strip fetch"
 
@@ -87,20 +86,18 @@ RDEPEND="
 
 S="${WORKDIR}/${PN}"
 
-
 src_install() {
 	local exe;
-	GAMEDIR="${GAMES_PREFIX_OPT}/${PN}"
+	dir="/opt/${PN}"
 
 	use amd64 && exe="Cogs-amd64"
 	use x86 && exe="Cogs-x86"
 
-	insinto "${GAMEDIR}"
-	exeinto "${GAMEDIR}"
+	insinto "${dir}"
+	exeinto "${dir}"
 
 	# install icon
-	doicon "${PN}.png" \
-		|| die "install icon"
+	doicon "${PN}.png" || die "install icon"
 
 	# install docs
 	dodoc "README-linux.txt"
@@ -110,8 +107,6 @@ src_install() {
 	doins -r data || die "doins game data"
 
 	# install shortcuts
-	games_make_wrapper "${PN}" "./${exe}" "${GAMEDIR}" || die "install shortcut"
+	make_wrapper "${PN}" "./${exe}" "${dir}" || die "install shortcut"
 	make_desktop_entry "${PN}" "Cogs" "${PN}"
-
-	prepgamesdirs
 }
