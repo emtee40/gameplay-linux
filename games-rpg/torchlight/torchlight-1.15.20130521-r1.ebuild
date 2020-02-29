@@ -1,21 +1,19 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI="4"
+EAPI=7
 
-inherit games multilib unpacker-nixstaller
+inherit desktop eutils unpacker-nixstaller
 
-TIMESTAMP="2012-09-26"
+TIMESTAMP="2013-05-21"
 
 DESCRIPTION="An action role-playing game, made by the creators of Diablo"
 HOMEPAGE="http://torchlightgame.com/"
 
 SLOT="0"
-LICENSE="as-is"
+LICENSE="all-rights-reserved"
 KEYWORDS="-* ~amd64 ~x86"
 RESTRICT="fetch"
-IUSE=""
 
 SRC_URI="Torchlight-${TIMESTAMP}.sh"
 
@@ -28,14 +26,13 @@ RDEPEND="app-arch/bzip2
 	media-libs/freetype
 	media-libs/ilmbase
 	media-libs/lcms
-	media-libs/libjpeg-turbo
 	media-libs/libpng
 	media-libs/libraw
 	media-libs/openexr
-	media-libs/openjpeg
 	media-libs/tiff
 	sys-apps/util-linux
 	sys-libs/zlib
+	virtual/jpeg
 	x11-libs/libdrm
 	x11-libs/libICE
 	x11-libs/libSM
@@ -61,6 +58,11 @@ DEPEND="${RDEPEND}"
 S="${WORKDIR}"
 MY_PN="Torchlight"
 
+QA_PRESTRIPPED="
+opt/torchlight/lib64/*
+opt/torchlight/lib/*
+"
+
 pkg_nofetch() {
 	ewarn
 	ewarn "Place ${A} to ${DISTDIR}"
@@ -84,7 +86,7 @@ src_unpack() {
 }
 
 src_install() {
-	local dir="${GAMES_PREFIX_OPT}/${PN}"
+	local dir="/opt/${PN}"
 
 	insinto "${dir}"
 	doins -r icons music logo.bmp pak.zip resources.cfg "$(get_libdir)"
@@ -100,10 +102,9 @@ src_install() {
 
 	doexe "${exe}"
 
-	games_make_wrapper "${PN}" "./${exe}" "${dir}" "${dir}/$(get_libdir)"
+	make_wrapper "${PN}" "./${exe}" "${dir}" "${dir}/$(get_libdir)"
 	doicon "${MY_PN}.png" || die
 	make_desktop_entry "${PN}" "${MY_PN}" "${MY_PN}"
 
 	dodoc README.linux
-	prepgamesdirs
 }
