@@ -3,10 +3,8 @@
 
 EAPI=7
 
-inherit desktop
-
 DESCRIPTION="Arx Fatalis demo"
-HOMEPAGE="https://www.arkane-studios.com/uk/arx.php"
+HOMEPAGE="https://store.steampowered.com/app/1700/Arx_Fatalis/"
 SRC_URI="arx_demo_english.zip"
 
 LICENSE="all-rights-reserved"
@@ -15,7 +13,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="fetch"
 
-RDEPEND="games-rpg/arx-libertatis"
+RDEPEND="
+	!games-rpg/arx-fatalis-data
+	games-rpg/arx-libertatis"
 DEPEND="
 	app-arch/cabextract
 	app-arch/unzip
@@ -31,23 +31,15 @@ pkg_nofetch() {
 
 src_unpack() {
 	unpack ${A}
-	cabextract Setup1.cab || die "cabextract failed"
-	cabextract Setup2.cab || die "cabextract failed"
-	cabextract Setup3.cab || die "cabextract failed"
+	cabextract Setup{1,2,3}.cab || die "cabextract failed"
 }
 
 src_install() {
-	insinto /usr/share/${PN}
-	doins -r *.pak bin/*.pak
-	insinto /usr/share/${PN}/misc
+	insinto /usr/share/arx/misc
 	doins bin/Logo.bmp bin/Arx.ttf
-
-	# convert to lowercase
-	cd "${D}"
-	find . -type f -exec sh -c 'echo "${1}"
-	lower="`echo "${1}" | tr [:upper:] [:lower:]`"
-	[ "${1}" = "${lower}" ] || mv "${1}" "${lower}"' - {} \;
-
-	make_desktop_entry "arx --data-dir=/usr/share/arx-fatalis-demo" \
-		"Arx Fatalis Demo" arx-libertatis
+	insinto /usr/share/arx
+	newins bin/LOC.pak loc.pak
+	newins SFX.pak sfx.pak
+	newins SPEECH.pak speech.pak
+	doins data.pak bin/data2.pak
 }
