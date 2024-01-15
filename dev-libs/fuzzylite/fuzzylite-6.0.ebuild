@@ -18,13 +18,15 @@ S="${WORKDIR}/${P}/${PN}"
 
 DOCS="../README.md"
 
+PATCHES=( "${FILESDIR}"/0000-add-gcc11-12-suppor.patch )
+
 src_configure() {
 	local mycmakeargs=(
 		-DFL_BUILD_STATIC=$(usex static-libs)
-		-DFL_USE_FLOAT=ON
+		-DFL_USE_FLOAT=OFF # https://bugs.gentoo.org/905664#c1
 		-DFL_BACKTRACE=ON
 		-DFL_BUILD_TESTS=OFF
-		-DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations"
+		-DCMAKE_CXX_FLAGS="-Wno-error"
 	)
 	cmake_src_configure
 }
