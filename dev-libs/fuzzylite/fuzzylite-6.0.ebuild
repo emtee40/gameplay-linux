@@ -1,12 +1,12 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
 DESCRIPTION="A Fuzzy Logic Control Library in C++"
-HOMEPAGE="http://www.fuzzylite.com/"
+HOMEPAGE="https://www.fuzzylite.com/"
 SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-3"
@@ -24,6 +24,7 @@ src_configure() {
 		-DFL_USE_FLOAT=ON
 		-DFL_BACKTRACE=ON
 		-DFL_BUILD_TESTS=OFF
+		-DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations"
 	)
 	cmake_src_configure
 }
