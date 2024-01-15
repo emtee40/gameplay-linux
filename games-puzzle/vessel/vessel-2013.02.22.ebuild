@@ -20,7 +20,7 @@ S=${WORKDIR}/data
 
 pkg_nofetch() {
 	echo
-	elog "Download ${SRC_URI} from ${HOMEPAGE} and place it in ${ACTUAL_PORTAGE_DISTDIR}"
+	elog "Download ${SRC_URI} from ${HOMEPAGE} and place it in ${PORTAGE_ACTUAL_DISTDIR}"
 	echo
 }
 
